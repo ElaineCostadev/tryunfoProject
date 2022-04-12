@@ -7,16 +7,17 @@ class Form extends Component {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo, hasTrunfo, isSaveButtonDisabled,
       onInputChange, onSaveButtonClick } = this.props;
-
+// {!cardName.length ? '-nome invalido-' : '-ok-' }
     return (
       <form>
         <label htmlFor="name">
           Nome:
           <input
             type="text"
-            name="name"
+            name="cardName"
             value={ cardName }
             onChange={ onInputChange }
+            placeholder="Digite o nome da Carta"
             data-testid="name-input"
           />
         </label>
@@ -24,12 +25,13 @@ class Form extends Component {
         <label htmlFor="textarea">
           <textarea
             id="textarea"
-            name="textarea"
+            name="cardDescription"
             value={ cardDescription }
             onChange={ onInputChange }
-            data-testid="description-input"
             rows="5"
             cols="33"
+            placeholder="Digite uma breve descrição da Carta"
+            data-testid="description-input"
           >
             Descrição da carta
           </textarea>
@@ -40,33 +42,38 @@ class Form extends Component {
           <input
             id="number1"
             type="number"
-            name="number1"
+            name="cardAttr1"
             value={ cardAttr1 }
             onChange={ onInputChange }
+            placeholder="Insira um numero de 1 a 90"
+            min={ 0 }
+            max={ 90 }
             data-testid="attr1-input"
           />
         </label>
 
         <label htmlFor="number2">
-          Numero 1
+          Numero 2
           <input
             id="number2"
             type="number"
-            name="number2"
+            name="cardAttr2"
             value={ cardAttr2 }
             onChange={ onInputChange }
+            placeholder="Insira um numero de 1 a 90"
             data-testid="attr2-input"
           />
         </label>
 
         <label htmlFor="number3">
-          Numero 1
+          Numero 3
           <input
             id="number3"
             type="number"
-            name="number3"
+            name="cardAttr3"
             value={ cardAttr3 }
             onChange={ onInputChange }
+            placeholder="Insira um numero de 1 a 90"
             data-testid="attr3-input"
           />
         </label>
@@ -75,16 +82,17 @@ class Form extends Component {
           Imagem
           <input
             type="text"
-            name="image"
+            name="cardImage"
             value={ cardImage }
             onChange={ onInputChange }
+            placeholder="Insira o link de uma imagem"
             data-testid="image-input"
           />
         </label>
 
         <label htmlFor="select">
           <select
-            name="select"
+            name="cardRare"
             value={ cardRare }
             onChange={ onInputChange }
             data-testid="rare-input"
@@ -96,16 +104,13 @@ class Form extends Component {
         </label>
 
         <label htmlFor="checkbox">
-          Super Trunfo
+          Essa carta é Super Trunfo?
           <input
             id="checkbox"
             type="checkbox"
-            name="input"
+            name="cardTrunfo"
             checked={ cardTrunfo }
             onChange={ onInputChange }
-            // onChange={ this.onInputChange }
-            /* onChange= {(event) => this.setState({cardTrunfo: true})
-                    (cardTrunfo) ? false : true} */
             data-testid="trunfo-input"
           />
         </label>
