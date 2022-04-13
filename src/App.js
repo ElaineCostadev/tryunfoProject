@@ -12,7 +12,8 @@ const INITIAL_STATE = {
   cardRare: '',
   cardTrunfo: false,
   isSaveButtonDisabled: true,
-  // newCard: [],
+  hasTrunfo: false,
+  cardSaved: [],
 };
 
 class App extends React.Component {
@@ -25,18 +26,12 @@ class App extends React.Component {
   onInputChange = ({ target }) => {
     // ajuste do checkbox para funcionar no form - isso sempre será necessario para ativar o checkbox
     const check = (target.type === 'checkbox') ? target.checked : target.value;
-    // agora preciso validar a informação para inderizar na tela essa msg se já tiver um Super Trunfo
-    console.log(target.checked === true);
-    if (target.checked === 'Super Trunfo') {
-      return <p>Você já tem um Super Trunfo em seu baralho</p>;
-    }
-
     this.setState({
       // [target.name]: target.value, - para ficar generico o nome do campo para pegar o value a ser digitado
       [target.name]: check,
       // mentoria Muca - sobre a segunda funcao de callback dentro do setState que espera o resultado anterior para executar a segunda funcao
     }, () => {
-      // desestruturar o state para manipular aqui
+      // desestruturar o state para manipular as condicionais aqui.
       const { cardName, cardDescription, cardImage, cardRare,
         cardAttr1, cardAttr2, cardAttr3 } = this.state;
         //
@@ -64,10 +59,40 @@ class App extends React.Component {
         isSaveButtonDisabled: !verification,
       });
     });
+    // agora preciso validar a informação para inderizar na tela essa msg se já tiver um Super Trunfo
+    // console.log(target.checked === true);
+    /* if (cardTrunfo) {
+      return <p>Você já tem um Super Trunfo em seu baralho</p>;
+    }
+    return cardTrunfo;
+  } */
   }
 
   onSaveButtonClick = (event) => {
     event.preventDefault();
+    const { cardName, cardDescription, cardAttr1, cardAttr2,
+      cardAttr3, cardImage, cardRare, cardTrunfo } = this.state;
+      //
+    const newCard = {
+      cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+      cardRare,
+      cardTrunfo,
+    };
+    this.setState((prevState) => ({
+      cardSaved: [...prevState.cardSaved, newCard],
+    }));
+
+    if (cardTrunfo) {
+      this.setState({
+        hasTrunfo: true,
+      });
+    }
+
     // limpar a lista novamente para o inicial
     this.setState({
       cardName: '',
@@ -77,14 +102,17 @@ class App extends React.Component {
       cardAttr3: 0,
       cardImage: '',
       cardRare: '',
+      cardTrunfo: false,
+      isSaveButtonDisabled: true,
     });
   }
 
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo, hasTrunfo, isSaveButtonDisabled,
-      onInputChange, onSaveButtonClick } = this.state;
-
+      cardSaved,
+    } = this.state;
+      // console.log(hasTrunfo);
     return (
       <div>
         <h1>Tryunfo teste</h1>
@@ -101,6 +129,7 @@ class App extends React.Component {
           isSaveButtonDisabled={ isSaveButtonDisabled } // um booleano
           onInputChange={ this.onInputChange } // uma callback
           onSaveButtonClick={ this.onSaveButtonClick } // uma callback
+          cardSaved={ cardSaved }
         />
         <Card
           cardName={ cardName }
@@ -112,6 +141,22 @@ class App extends React.Component {
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
         />
+        <ul>
+          { cardSaved.map((cards, index) => (
+            <li key={ index }>
+              <Card
+                cardName={ cards.cardName }
+                cardDescription={ cards.cardDescription }
+                cardAttr1={ cards.cardAttr1 }
+                cardAttr2={ cards.cardAttr2 }
+                cardAttr3={ cards.cardAttr3 }
+                cardImage={ cards.cardImage }
+                cardRare={ cards.cardRare }
+                cardTrunfo={ cards.cardTrunfo }
+              />
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }
