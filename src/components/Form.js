@@ -7,7 +7,7 @@ class Form extends Component {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo, hasTrunfo, isSaveButtonDisabled,
       onInputChange, onSaveButtonClick } = this.props;
-// {!cardName.length ? '-nome invalido-' : '-ok-' }
+    // {!cardName.length ? '-nome invalido-' : '-ok-' }
     return (
       <form>
         <label htmlFor="name">
@@ -112,6 +112,17 @@ class Form extends Component {
             checked={ cardTrunfo }
             onChange={ onInputChange }
             data-testid="trunfo-input"
+            hasTrunfo={
+              (hasTrunfo)
+                ? <p>Você já tem um Super Trunfo em seu baralho</p>
+                : null
+            }
+            // hasTrunfo={hasTrunfo}
+            /*  {
+              (hasTrunfo)
+              ? "checked"
+              : ( <p>Você já tem um Super Trunfo em seu baralho</p>)
+            }   */
           />
         </label>
 
