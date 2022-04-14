@@ -6,7 +6,7 @@ class Form extends Component {
     // cardTrunfo
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo, hasTrunfo, isSaveButtonDisabled,
-      onInputChange, onSaveButtonClick } = this.props;
+      onInputChange, onSaveButtonClick, handleFilter } = this.props;
     // {!cardName.length ? '-nome invalido-' : '-ok-' }
     return (
       <form>
@@ -129,6 +129,18 @@ class Form extends Component {
         >
           Salvar Carta
         </button>
+
+        <label htmlFor="filterName">
+          Filtrar pelo nome
+          <input
+            id="filterName"
+            type="text"
+            name=""
+            data-testid="name-filter"
+            onChange={ handleFilter }
+          />
+
+        </label>
 
       </form>
     );

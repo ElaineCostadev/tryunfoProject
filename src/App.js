@@ -3,15 +3,15 @@ import Form from './components/Form';
 import Card from './components/Card';
 // course gabarito https://app.betrybe.com/course/front-end/componentes-com-estado-eventos-e-formularios-com-react/eventos-e-formularios-no-react/solutions/306d9a98-87b4-445b-9256-482909f5e918/conteudo/a675c67e-b553-4390-9904-82f6ed07ab20?use_case=calendar
 const INITIAL_STATE = {
-  cardName: '',
-  cardDescription: '',
-  cardAttr1: '',
-  cardAttr2: '',
-  cardAttr3: '',
-  cardImage: '',
-  cardRare: '',
+  cardName: '123',
+  cardDescription: '123',
+  cardAttr1: '0',
+  cardAttr2: '0',
+  cardAttr3: '0',
+  cardImage: 'a',
+  cardRare: 'raro',
   cardTrunfo: false,
-  isSaveButtonDisabled: true,
+  isSaveButtonDisabled: false,
   hasTrunfo: false,
   cardSaved: [],
 };
@@ -81,7 +81,7 @@ class App extends React.Component {
       // para pegar todos os cards anteriores e coloca no novo objeto
       cardSaved: [...prevState.cardSaved, newCard],
     }));
-    // Esse if muda o state de hasTrunfo apos o clique - correto
+    // Esse if muda o state de hasTrunfo apos o clique
     if (cardTrunfo) {
       this.setState({
         hasTrunfo: true,
@@ -90,15 +90,15 @@ class App extends React.Component {
 
     // limpar a lista novamente para o inicial
     this.setState({
-      cardName: '',
-      cardDescription: '',
+      cardName: '1',
+      cardDescription: '1',
       cardAttr1: 0,
       cardAttr2: 0,
       cardAttr3: 0,
-      cardImage: '',
-      cardRare: '',
+      cardImage: 'a',
+      cardRare: 'muito raro',
       cardTrunfo: false,
-      isSaveButtonDisabled: true,
+      isSaveButtonDisabled: false,
     });
   }
 
@@ -109,6 +109,7 @@ class App extends React.Component {
          .filter((cards) => cards.cardName !== cardRemoved.cardName),
      }));
      // volta o state para false quando a carta SuperTrunfo é excluida
+     // Ajuda mentoria Summer - Carlos
      if (cardRemoved.cardTrunfo) {
        this.setState({
          hasTrunfo: false,
@@ -116,6 +117,38 @@ class App extends React.Component {
        });
      }
    }
+
+   // filtra os novos cards pelo nome
+   handleFilter = ({ target }) => {
+     // trouxe as cartas salvas aqui
+     const { cardSaved } = this.state;
+     this.setState((prevState) => ({
+       cardSaved: prevState.cardSaved
+         .filter((filterName) => filterName.cardName === target.value),
+     }));
+     if (target.value === 0) {
+       this.setState({
+         cardSaved: prevState.cardSaved,
+       });
+     }
+   };
+   /*     this.setState((prevState) => {
+       console.log('cardSaved', cardSaved);
+       console.log('prevState.cardSaved', prevState.cardSaved);
+       console.log('target.value', target.value);
+       console.log((!target.value) && prevState);
+    });
+    */
+
+   // filtrando as cartas pelo nome
+   // cardSaved.filter((filterName) => filterName.cardName === target.value);
+   // Ao digitar neste campo, deve ser renderizado na página apenas as cartas que contenham no nome o texto digitado.
+   // como renderizar as cartas com o nome igual? - consegui com o setState, mas ao apagar a letra, está apagando tudo.
+
+   //   this.setState((prevState) => ({
+   /*       cardSaved: prevState.cardSaved
+       .filter((filterName) => filterName.cardName === target.value),
+   })); */
 
    render() {
      const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
@@ -139,6 +172,7 @@ class App extends React.Component {
            onInputChange={ this.onInputChange } // uma callback
            onSaveButtonClick={ this.onSaveButtonClick } // uma callback
            cardSaved={ cardSaved }
+           handleFilter={ this.handleFilter }
          />
          <Card
            cardName={ cardName }
