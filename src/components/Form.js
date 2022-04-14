@@ -7,7 +7,6 @@ class Form extends Component {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo, hasTrunfo, isSaveButtonDisabled,
       onInputChange, onSaveButtonClick } = this.props;
-    console.log(hasTrunfo);
     // {!cardName.length ? '-nome invalido-' : '-ok-' }
     return (
       <form>
