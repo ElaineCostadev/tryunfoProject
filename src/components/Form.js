@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 
 class Form extends Component {
   render() {
-    // cardTrunfo
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo, hasTrunfo, isSaveButtonDisabled,
-      onInputChange, onSaveButtonClick, handleFilter } = this.props;
-    // {!cardName.length ? '-nome invalido-' : '-ok-' }
+      onInputChange, onSaveButtonClick } = this.props;
+
     return (
       <form>
         <label htmlFor="name">
@@ -92,12 +91,13 @@ class Form extends Component {
 
         <label htmlFor="select">
           <select
+            id="select"
             name="cardRare"
             value={ cardRare }
             onChange={ onInputChange }
             data-testid="rare-input"
           >
-            <option>normal</option>
+            <option selected>normal</option>
             <option>raro</option>
             <option>muito raro</option>
           </select>
@@ -133,13 +133,31 @@ class Form extends Component {
         <label htmlFor="filterName">
           Filtrar pelo nome
           <input
+            placeholder="Buscar pelo nome"
             id="filterName"
             type="text"
-            name=""
+            name="filterName"
             data-testid="name-filter"
-            onChange={ handleFilter }
+            onChange={ this.handleFilter }
           />
+        </label>
 
+        <label htmlFor="selectFilter">
+          Filtrar pela Raridade
+          <select
+            id="selectFilter"
+            placeholder="Raridade"
+            name="selectFilter"
+            // quando tiro o value os valores são renderizados na tela...
+            // value={ selectFilter }
+            onChange={ onInputChange }
+            data-testid="rare-filter"
+          >
+            <option>todas</option>
+            <option>normal</option>
+            <option>raro</option>
+            <option>muito raro</option>
+          </select>
         </label>
 
       </form>
